@@ -20,18 +20,26 @@
 		    			}
 		    		}
 
-		    		print_r( get_option($option_name) );
+		    		$options = get_option($option_name);
 
 					$post_types=get_post_types('','names'); 
 					foreach ($post_types as $post_type ) {
 						$object = get_post_type_object( $post_type );
 						$name = $object->labels->name;
 						if ($post_type != "attachment" && $post_type != "revision" && $post_type != "nav_menu_item") {
+							if ( in_array($post_type, $options) ) {
+				?>
+						<tr>
+							<td scope="row"><input type="checkbox" checked name="wpc-types[]" value="<?php echo $post_type ?>" /> <label><?php echo $name . " (" . $post_type . ")" ?></label></td>
+						</tr>
+				<?php		  	
+							} else {
 				?>
 						<tr>
 							<td scope="row"><input type="checkbox" name="wpc-types[]" value="<?php echo $post_type ?>" /> <label><?php echo $name . " (" . $post_type . ")" ?></label></td>
 						</tr>
 				<?php		  	
+							}
 						}
 					}
 				?>
