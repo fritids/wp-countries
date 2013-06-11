@@ -6,7 +6,7 @@
 
 	<?php
 
-		global $post,$wpdb;
+		global $post, $wpdb, $wpc;
 		$name = "";
 		$localname = "";
 		$continent = "";
@@ -14,36 +14,7 @@
 		$code2 = "";
 		$update = "false";
 
-		$continents = Array(
-			Array(
-				"id" => "Asia",
-				"name" => _("Asia")
-			),
-			Array(
-				"id" => "Europe",
-				"name" => _("Europa")
-			),
-			Array(
-				"id" => "Africa",
-				"name" => _("Africa")
-			),
-			Array(
-				"id" => "Oceania",
-				"name" => _("Oceania")
-			),
-			Array(
-				"id" => "Antarctica",
-				"name" => _("Antartica")
-			),
-			Array(
-				"id" => "South America",
-				"name" => _("América del sur")
-			),
-			Array(
-				"id" => "North America",
-				"name" => _("América del norte")
-			),
-		);
+		$continents = $wpc->get_continents();
 
 		
 
@@ -54,8 +25,7 @@
 
 		// get update value
 		if (isset($_GET["updt"])) {
-			$sql = "SELECT * FROM wp_countries WHERE Code2 = '" . $_GET["updt"] . "' LIMIT 1";
-			$country = $wpdb->get_results( $sql );
+			$country = $wpc->get_country( $_GET["updt"] );
 			$name = $country[0]->Name;
 			$localname = $country[0]->LocalName;
 			$continent = $country[0]->Continent;
@@ -200,8 +170,7 @@
 	</div>
 
 	<?php
-		$sql = "SELECT * FROM wp_countries ORDER BY Name";
-		$countries = $wpdb->get_results( $sql );
+		$countries = $wpc->get_countries();
 	?>
 	<table class="widefat">
 		<thead>

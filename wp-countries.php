@@ -16,6 +16,11 @@
 ?>
 <?php
 
+	require_once dirname( __FILE__ ) . '/class.php';
+
+	$wpc = new WP_Countries;
+	$country = $wpc->get_client_country();
+
 	// Get real IP
 
 	function WPC_GetIp($ip){
